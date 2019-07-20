@@ -82,7 +82,7 @@ module.exports = grammar({
 
     assert: $ => seq('assert', $._expr, ';', $._expr_function),
     with: $ => seq('with', $._expr, ';', $._expr_function),
-    let: $ => seq('let', optional($._binds), 'in', $._expr_function),
+    let: $ => seq('let', optional($.binds), 'in', $._expr_function),
 
     _expr_if: $ => choice(
       $.if,
@@ -158,9 +158,9 @@ module.exports = grammar({
 
     parenthesized: $ => seq('(', $._expr, ')'),
 
-    attrset: $ => seq('{', optional($._binds), '}'),
-    let_attrset: $ => seq('let', '{', optional($._binds), '}'),
-    rec_attrset: $ => seq('rec', '{', optional($._binds), '}'),
+    attrset: $ => seq('{', optional($.binds), '}'),
+    let_attrset: $ => seq('let', '{', optional($.binds), '}'),
+    rec_attrset: $ => seq('rec', '{', optional($.binds), '}'),
 
     string: $ => seq('"', optional($._string_parts), '"'),
     indented_string: $ => seq("''", optional($._ind_string_parts), "''"),
@@ -181,7 +181,7 @@ module.exports = grammar({
       )
     ),
 
-    _binds: $ => repeat1(choice($.bind, $.inherit)),
+    binds: $ => repeat1(choice($.bind, $.inherit)),
     bind: $ => seq($.attrpath, '=', $._expr, ';'),
     inherit: $ => choice(
       seq("inherit", $.attrs, ';'),
